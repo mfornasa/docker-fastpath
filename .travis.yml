@@ -1,0 +1,31 @@
+language: c
+sudo: false
+os:
+- linux
+- osx
+compiler: gcc
+env:
+  - RELEASE_DIR=releases/${TRAVIS_OS_NAME}
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update         ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libssh2; fi
+script: mkdir build && cd build && cmake .. && make && cd ..
+before_deploy:
+- mkdir -p ${RELEASE_DIR}
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then zip ${RELEASE_DIR}/docker-fastpath-osx-${TRAVIS_TAG}.zip -j build/fastpath; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then zip ${RELEASE_DIR}/docker-fastpath-osx-latest.zip -j build/fastpath; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar czvf ${RELEASE_DIR}/docker-fastpath-linux-amd64-${TRAVIS_TAG}.tgz -C build fastpath; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar czvf ${RELEASE_DIR}/docker-fastpath-linux-amd64-latest.tgz -C build fastpath; fi
+deploy:
+  provider: s3
+  access_key_id: AKIAIKUIFSEA4CDTGC3A
+  secret_access_key:
+    secure: "PAA0Q/jDkxIOdoeJ0K4DgGGgH+6X3lNBbASrBHScKnOgB++daqJC07qZS/8+ANZnIjxsj2SFxoH9ELerxZfBHFonV3T0G3pyzi4vQc7Z4hB5ZnkQkmDgAsUWM9bHQtcC/yB67+/0WnqoWd8cSDKtc+f81Yzn1bDU6TejNtMUvM6/U95Dl+TKw25SUx6ElsjZfcicJ6pnhrnsrOyj4yFjc74hu/fhdF5bQdsELftr+AX1VCEiqbJQIif3ZHobvI4t0jM6x4PNUyElw5g5bx6Ju9M6vJd/Yl1DnuyUYnqV5tD33HDu+1QGvD1/09uPLiroXcbGq/CbkanDTTDWErZbtRwjM5/MCDbg/njUCiaAIwoZDo0BN12BCDYqKUm1I2QIma1FsvBLC57/OYRvZoCqcQbezafrhM8IQiYD3eXHawmeWiIiEFejM7tM1QH9h3m6YN/PZ9K8WeF7qaKr9woWujtl5dj6Uo/tiC94qDNaBMbcTQdoQdf3W9a6MI1guVuvx25jj0KkcNHJKAlU9lodPM5cUuXJY2Ko00VZgC5/O6UDNII0PyNRjX6qbNoJ0HJPAza6sFf4VDcUNLYBh0AeO75xrySn1dmrFXcGQ/jSzWslsXirkrmxCgzLly83GQRyeFhR5n38tql9cfxyKU7CF+sJAALl8c1fRnI9j8W6HkM="
+  region: eu-west-1
+  bucket: docker-fastpath
+  local-dir: releases
+  upload-dir: releases
+  acl: private
+  skip_cleanup: true
+  on:
+    tags: true
