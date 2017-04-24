@@ -1,6 +1,6 @@
 # Docker FastPath
 
-Docker FastPath is a command line utility that interacts with your Git repo and your Docker image registry to allow you to avoid building an image for the same codebase more than once. It analyzes your git history and check if an image suitable for your current codebase is already available in your Docker image registry. For an introduction to Docker FastPath, please read my [blog post](???).
+Docker FastPath is a command line utility that interacts with your Git repo and your Docker image registry to allow you to avoid building an image for the same codebase more than once. It analyzes your git history and check if an image suitable for your current codebase is already available in your Docker image registry. For an introduction to Docker FastPath, please read my [blog post](https://medium.com/@mfornasa/docker-fastpath-only-build-your-images-once-a4c3beeae7d3).
 
 ## Examples
 Two deployment examples are provided:
