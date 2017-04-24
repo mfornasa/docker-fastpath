@@ -40,11 +40,14 @@ Fastpath is available in binary form for 64-bit Linux systems.
 2. Run `tar xzvf docker-fastpath-linux-amd64-latest.tgz` to extract the executable file
 3. Run `./fastpath`
 
+You can find old releases [here](http://docker-fastpath.s3-website-eu-west-1.amazonaws.com/releases/linux/).
+
 ### macOS
 1. Download the [latest release](https://docker-fastpath.s3-eu-west-1.amazonaws.com/releases/osx/docker-fastpath-osx-latest.zip)
 2. Run `unzip docker-fastpath-osx-latest.zip` to extract the executable file
 3. Run `./fastpath`
 
+You can find old releases [here](http://docker-fastpath.s3-website-eu-west-1.amazonaws.com/releases/osx/).
 
 ## Building
 FastPath is available as a binary for macOS and for Linux. If you prefer to build from source, see the following build instructions.
